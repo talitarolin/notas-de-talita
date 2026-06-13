@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Talita Rolin — Notas, reflexões, fotografias e estudos.">
+  <meta property="og:title" content="Talita Rolin">
+  <meta property="og:description" content="Notas, reflexões, fotografias e estudos.">
+  <title>Talita Rolin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --bg:          #FAF8F4;
+      --bg-card:     #F5F2EC;
+      --text:        #222222;
+      --text-sec:    #5E5A55;
+      --primary:     #7A1F4D;
+      --secondary:   #B88917;
+      --border:      rgba(34,34,34,0.10);
+      --font-title:  'Cormorant Garamond', Georgia, serif;
+      --font-body:   'Inter', system-ui, sans-serif;
+      --radius:      6px;
+      --max-prose:   68ch;
+    }
+    [data-theme="dark"] {
+      --bg:          #1A1714;
+      --bg-card:     #201D19;
+      --text:        #EDE9E2;
+      --text-sec:    #8E8880;
+      --primary:     #C4527E;
+      --secondary:   #D4A832;
+      --border:      rgba(237,233,226,0.09);
+    }
+
+    /* ─── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      font-size: 1rem;
+      transition: background-color 0.25s ease, color 0.25s ease;
+      position: relative;
+      min-height: 100vh;
+    }
+    ::selection { background: var(--primary); color: #fff; }
+    img { display: block; max-width: 100%; }
+    a { color: var(--primary); text-decoration-thickness: 1px; text-underline-offset: 3px; transition: opacity 0.15s ease; }
+    a:hover { opacity: 0.72; }
+    a:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 2px; }
+
+    /* ─── TEXTURE ────────────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23t)' opacity='0.028'/%3E%3C/svg%3E");
+      background-size: 400px 400px;
+    }
+    body > * { position: relative; z-index: 1; }
+
+    /* ─── SKIP LINK ──────────────────────────────────────────── */
+    .skip-link {
+      position: absolute; top: -40px; left: 1rem;
+      background: var(--primary); color: #fff;
+      padding: 0.4rem 0.8rem; border-radius: var(--radius);
+      font-family: var(--font-body); font-size: 0.85rem;
+      z-index: 999; transition: top 0.2s ease;
+    }
+    .skip-link:focus { top: 0.5rem; }
+
+    /* ─── HEADER / NAV ───────────────────────────────────────── */
+    header {
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100;
+      background-color: var(--bg);
+      backdrop-filter: blur(8px);
+      transition: background-color 0.25s ease;
+    }
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 58px;
+      gap: 2rem;
+    }
+    .nav-brand {
+      font-family: var(--font-title);
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      flex-shrink: 0;
+    }
+    .nav-brand:hover { opacity: 0.72; }
+    nav ul {
+      display: flex;
+      gap: 0.1rem;
+      list-style: none;
+      align-items: center;
+    }
+    nav a {
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-sec);
+      text-decoration: none;
+      padding: 0.4rem 0.7rem;
+      border-radius: var(--radius);
+      transition: color 0.15s, background 0.15s;
+    }
+    nav a:hover, nav a[aria-current="page"] {
+      color: var(--primary);
+      background: rgba(122,31,77,0.06);
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+    .btn-icon {
+      background: none; border: none;
+      color: var(--text-sec); cursor: pointer;
+      padding: 0.45rem; border-radius: var(--radius);
+      display: flex; align-items: center;
+      transition: color 0.15s, background 0.15s;
+      font-size: 1rem;
+    }
+    .btn-icon:hover { color: var(--primary); background: rgba(122,31,77,0.06); }
+    .btn-icon:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .search-wrap {
+      position: relative;
+      display: flex; align-items: center;
+    }
+    #search {
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      padding: 0.35rem 0.75rem 0.35rem 2rem;
+      border-radius: 20px;
+      outline: none;
+      width: 160px;
+      transition: border-color 0.15s, width 0.2s ease;
+    }
+    #search:focus { border-color: var(--primary); width: 200px; }
+    #search::placeholder { color: var(--text-sec); }
+    .search-icon {
+      position: absolute; left: 0.6rem;
+      color: var(--text-sec); pointer-events: none;
+      font-size: 0.8rem;
+    }
+
+    /* ─── PROGRESS BAR ───────────────────────────────────────── */
+    #progress {
+      position: fixed; top: 0; left: 0;
+      height: 2px; background: var(--primary);
+      width: 0%; z-index: 200;
+      transition: width 0.1s linear;
+    }
+
+    /* ─── MAIN LAYOUT ────────────────────────────────────────── */
+    main { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
+
+    /* ─── QUOTE OF THE DAY ───────────────────────────────────── */
+    .quote-section {
+      padding: 4.5rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 4rem;
+    }
+    .quote-mark {
+      font-family: var(--font-title);
+      font-size: 5rem;
+      line-height: 0.6;
+      color: var(--secondary);
+      display: block;
+      margin-bottom: 0.6rem;
+      opacity: 0.6;
+    }
+    .quote-text {
+      font-family: var(--font-title);
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.45;
+      max-width: 700px;
+    }
+    .quote-author {
+      margin-top: 1rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-sec);
+    }
+
+    /* ─── BIO ────────────────────────────────────────────────── */
+    .bio-section {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: start;
+      margin-bottom: 5rem;
+    }
+    .bio-text p {
+      font-size: 1.05rem;
+      color: var(--text-sec);
+      max-width: var(--max-prose);
+      line-height: 1.85;
+    }
+    .bio-text p + p { margin-top: 1rem; }
+    .bio-portrait {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 2px solid var(--border);
+    }
+    .bio-portrait-inner {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #d4a8c0 0%, #7A1F4D 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-title);
+      font-size: 2.2rem;
+      color: #fff;
+      font-weight: 300;
+    }
+
+    /* ─── SECTION HEADING ────────────────────────────────────── */
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      font-weight: 500;
+      margin-bottom: 1.8rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .section-title {
+      font-family: var(--font-title);
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 0.4rem;
+    }
+
+    /* ─── ARTICLES GRID ──────────────────────────────────────── */
+    .articles-section { margin-bottom: 5rem; }
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2.5rem;
+    }
+    .article-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      position: relative;
+    }
+    .article-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+      border-color: rgba(122,31,77,0.2);
+    }
+    .article-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23t)' opacity='0.02'/%3E%3C/svg%3E");
+      pointer-events: none;
+      border-radius: 10px;
+    }
+    .card-cover {
+      height: 160px;
+      overflow: hidden;
+      position: relative;
+    }
+    .card-cover-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .article-card:hover .card-cover-img { transform: scale(1.03); }
+    .card-cover-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-body { padding: 1.5rem; }
+    .card-meta {
+      display: flex; align-items: center; gap: 0.8rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.76rem;
+      color: var(--text-sec);
+      letter-spacing: 0.04em;
+    }
+    .card-category {
+      color: var(--primary);
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+    }
+    .card-dot { color: var(--border); }
+    .card-title {
+      font-family: var(--font-title);
+      font-size: 1.45rem;
+      font-weight: 500;
+      line-height: 1.25;
+      margin-bottom: 0.6rem;
+    }
+    .card-title a { color: var(--text); text-decoration: none; }
+    .card-title a:hover { color: var(--primary); }
+    .card-excerpt {
+      font-size: 0.9rem;
+      color: var(--text-sec);
+      line-height: 1.7;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 1.2rem;
+    }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.55rem;
+      border-radius: 20px;
+      background: rgba(184,137,23,0.1);
+      color: var(--secondary);
+      border: 1px solid rgba(184,137,23,0.2);
+    }
+
+    /* ─── FEATURED ARTICLE ───────────────────────────────────── */
+    .featured-article {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+    .featured-cover {
+      height: 100%; min-height: 280px;
+      position: relative; overflow: hidden;
+    }
+    .featured-cover-bg {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .featured-article:hover .featured-cover-bg { transform: scale(1.04); }
+    .featured-body {
+      padding: 2.5rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .featured-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      margin-bottom: 0.6rem;
+      font-weight: 500;
+    }
+    .featured-title {
+      font-family: var(--font-title);
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+      font-weight: 500;
+      line-height: 1.2;
+      margin-bottom: 0.8rem;
+    }
+    .featured-title a { color: var(--text); text-decoration: none; }
+    .featured-title a:hover { color: var(--primary); }
+    .featured-excerpt {
+      font-size: 0.95rem;
+      color: var(--text-sec);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+    .read-link {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--primary);
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      transition: gap 0.15s ease;
+    }
+    .read-link:hover { gap: 0.7rem; opacity: 1; }
+
+    /* ─── ARTICLE PAGE SIMULATION ────────────────────────────── */
+    .article-page {
+      display: none;
+      padding: 3rem 0 5rem;
+    }
+    .article-page.active { display: block; }
+    .article-header { margin-bottom: 2.5rem; }
+    .article-eyebrow {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1.2rem;
+      font-size: 0.78rem; color: var(--text-sec);
+    }
+    .article-eyebrow .card-category { font-size: 0.74rem; }
+    .article-title {
+      font-family: var(--font-title);
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+      max-width: 20ch;
+    }
+    .article-subtitle {
+      font-family: var(--font-title);
+      font-size: 1.25rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text-sec);
+      max-width: 55ch;
+      line-height: 1.5;
+      margin-bottom: 2rem;
+    }
+    .article-divider {
+      width: 3rem; height: 1px;
+      background: var(--secondary);
+      margin-bottom: 2.5rem;
+    }
+    .article-body {
+      max-width: var(--max-prose);
+    }
+    .article-body p { margin-bottom: 1.5rem; font-size: 1.05rem; line-height: 1.85; }
+    .article-body p:first-of-type::first-letter {
+      font-family: var(--font-title);
+      font-size: 5.2rem;
+      font-weight: 500;
+      float: left;
+      line-height: 0.78;
+      margin: 0.08em 0.12em 0 0;
+      color: var(--primary);
+    }
+    .article-body blockquote {
+      margin: 2.5rem 0;
+      padding: 1.5rem 2rem;
+      border-left: 3px solid var(--secondary);
+      background: var(--bg-card);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      font-family: var(--font-title);
+      font-size: 1.2rem;
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--text);
+    }
+    .article-body blockquote cite {
+      display: block;
+      font-size: 0.8rem;
+      font-style: normal;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-sec);
+      margin-top: 0.8rem;
+    }
+    .article-image {
+      margin: 2.5rem 0;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+    .article-image img {
+      width: 100%;
+      transition: opacity 0.2s;
+    }
+    .article-image:hover img { opacity: 0.95; }
+    .article-image figcaption {
+      font-size: 0.8rem;
+      color: var(--text-sec);
+      text-align: center;
+      margin-top: 0.6rem;
+      font-style: italic;
+    }
+    .article-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .article-nav-item {
+      padding: 1.2rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .article-nav-item:hover {
+      border-color: var(--primary);
+      background: rgba(122,31,77,0.03);
+      opacity: 1;
+    }
+    .nav-direction {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-sec);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .nav-article-title {
+      font-family: var(--font-title);
+      font-size: 1.05rem;
+      line-height: 1.3;
+    }
+    .article-nav-item.next { text-align: right; }
+
+    /* ─── PHOTO GALLERY ──────────────────────────────────────── */
+    .photos-section { margin-bottom: 5rem; }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .photo-item {
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: zoom-in;
+      aspect-ratio: 4/3;
+      position: relative;
+    }
+    .photo-item-inner {
+      width: 100%; height: 100%;
+      transition: transform 0.3s ease;
+    }
+    .photo-item:hover .photo-item-inner { transform: scale(1.04); }
+    .photo-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-title);
+      font-size: 1.5rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* ─── LIGHTBOX ───────────────────────────────────────────── */
+    #lightbox {
+      position: fixed; inset: 0;
+      background: rgba(10,8,6,0.92);
+      z-index: 500;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    #lightbox.open { opacity: 1; pointer-events: all; }
+    .lightbox-img {
+      max-width: 90vw; max-height: 85vh;
+      border-radius: 6px;
+      object-fit: contain;
+    }
+    .lightbox-close {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      background: none; border: none;
+      color: #fff; font-size: 1.5rem; cursor: pointer;
+      padding: 0.5rem; border-radius: var(--radius);
+      transition: opacity 0.15s;
+    }
+    .lightbox-close:hover { opacity: 0.7; }
+    .lightbox-close:focus-visible { outline: 2px solid #fff; }
+    .lightbox-caption {
+      position: absolute; bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.6);
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .footer-brand {
+      font-family: var(--font-title);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--text);
+    }
+    .footer-links {
+      display: flex; gap: 1.2rem; list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-sec);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--text-sec);
+    }
+
+    /* ─── REDUCED MOTION ─────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ─── MOBILE ─────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .nav-inner { padding: 0 1rem; }
+      nav ul { display: none; }
+      main { padding: 0 1rem; }
+      .bio-section { grid-template-columns: 1fr; }
+      .bio-portrait { order: -1; }
+      .featured-article { grid-template-columns: 1fr; }
+      .featured-cover { min-height: 200px; }
+      .photo-grid { grid-template-columns: repeat(2, 1fr); }
+      footer { flex-direction: column; text-align: center; }
+      .article-nav { grid-template-columns: 1fr; }
+    }
+
+    /* ─── HOME / ARTICLE TOGGLE ──────────────────────────────── */
+    .home-view { display: block; }
+    .home-view.hidden { display: none; }
+
+    /* ─── GRADIENT PLACEHOLDERS ──────────────────────────────── */
+    .grad-study    { background: linear-gradient(135deg, #1a1f3a, #3a4a7a); }
+    .grad-reflect  { background: linear-gradient(135deg, #2a1520, #7A1F4D); }
+    .grad-photo    { background: linear-gradient(135deg, #1a2a1a, #3a6a3a); }
+    .grad-games    { background: linear-gradient(135deg, #1a1a2a, #4a3a7a); }
+    .grad-warmth   { background: linear-gradient(135deg, #2a1a10, #8a4a20); }
+    .grad-teal     { background: linear-gradient(135deg, #0a2a2a, #1a6a6a); }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Ir para o conteúdo</a>
+  <div id="progress" role="progressbar" aria-label="Progresso de leitura" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
+  <!-- ─── LIGHTBOX ─── -->
+  <div id="lightbox" role="dialog" aria-label="Visualizar fotografia" aria-modal="true">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Fechar">✕</button>
+    <div class="lightbox-placeholder" style="color:#fff;font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-style:italic;opacity:0.5;">fotografia</div>
+    <span class="lightbox-caption" id="lightbox-caption"></span>
+  </div>
+
+  <!-- ─── HEADER ─── -->
+  <header>
+    <div class="nav-inner">
+      <a href="#" class="nav-brand" onclick="showHome()" aria-label="Talita Rolin — início">Talita Rolin</a>
+      <nav aria-label="Navegação principal">
+        <ul>
+          <li><a href="#" onclick="showHome()" aria-current="page">Início</a></li>
+          <li><a href="#">Estudos</a></li>
+          <li><a href="#">Reflexões</a></li>
+          <li><a href="#">Games</a></li>
+          <li><a href="#">Fotografia</a></li>
+          <li><a href="#">Leituras</a></li>
+        </ul>
+      </nav>
+      <div class="nav-right">
+        <div class="search-wrap">
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input type="search" id="search" placeholder="Buscar…" aria-label="Buscar artigos">
+        </div>
+        <button class="btn-icon" id="theme-toggle" aria-label="Alternar modo escuro" onclick="toggleTheme()">
+          <span id="theme-icon">◑</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ════ HOME VIEW ════ -->
+    <div class="home-view" id="home-view">
+
+      <!-- Quote of the Day -->
+      <section class="quote-section" aria-label="Frase do dia">
+        <span class="quote-mark" aria-hidden="true">"</span>
+        <blockquote>
+          <p class="quote-text" id="daily-quote"></p>
+          <footer>
+            <cite class="quote-author" id="daily-author"></cite>
+          </footer>
+        </blockquote>
+      </section>
+
+      <!-- Bio -->
+      <section class="bio-section" aria-label="Sobre a autora">
+        <div class="bio-text">
+          <p>Olá. Sou Talita — estudante de engenharia, aprendiz constante, observadora das pequenas coisas que o cotidiano tenta esconder. Este espaço nasceu da vontade de transformar pensamentos em algo durável.</p>
+          <p>Aqui você vai encontrar anotações sobre tecnologia, reflexões sobre aprender e existir, fotografias de lugares e momentos, e registros honestos de uma jornada ainda em construção.</p>
+        </div>
+        <div class="bio-portrait" aria-hidden="true">
+          <div class="bio-portrait-inner">T</div>
+        </div>
+      </section>
+
+      <!-- Articles -->
+      <section class="articles-section" aria-label="Artigos recentes">
+        <p class="section-label">Publicações recentes</p>
+        <div class="articles-grid">
+
+          <!-- Featured -->
+          <article class="featured-article article-card">
+            <div class="featured-cover">
+              <div class="featured-cover-bg grad-study" style="height:100%;"></div>
+            </div>
+            <div class="featured-body">
+              <span class="featured-label">✦ Destaque</span>
+              <h2 class="featured-title">
+                <a href="#" onclick="showArticle(); return false;">A lógica por trás das máquinas de estado</a>
+              </h2>
+              <p class="featured-excerpt">Quando aprendi que um semáforo pode ser formalizado como um sistema de estados, algo mudou na forma como enxergo o mundo ao redor. Uma reflexão sobre Programming I e o que permanece depois da aula acabar.</p>
+              <a href="#" class="read-link" onclick="showArticle(); return false;" aria-label="Ler: A lógica por trás das máquinas de estado">Ler artigo →</a>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="article-card">
+            <div class="card-cover grad-reflect"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-category">Reflexões</span>
+                <span class="card-dot" aria-hidden="true">·</span>
+                <time datetime="2026-05-20">20 mai 2026</time>
+                <span class="card-dot" aria-hidden="true">·</span>
+                <span>4 min</span>
+              </div>
+              <h2 class="card-title"><a href="#" onclick="showArticle(); return false;">O que a neuroplasticidade me ensinou sobre falhar bem</a></h2>
+              <p class="card-excerpt">Na masterclass do Aspire Leaders, aprendi que o cérebro literalmente se reconfigura com cada tentativa. Mas o que fazemos com essa informação?</p>
+              <div class="card-tags">
+                <span class="tag">aprendizado</span>
+                <span class="tag">neurociência</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="article-card">
+            <div class="card-cover grad-photo" style="height:160px;"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-category">Fotografia</span>
+                <span class="card-dot" aria-hidden="true">·</span>
+                <time datetime="2026-04-12">12 abr 2026</time>
+                <span class="card-dot" aria-hidden="true">·</span>
+                <span>2 min</span>
+              </div>
+              <h2 class="card-title"><a href="#">Luz de quarta-feira</a></h2>
+              <p class="card-excerpt">Há um tipo de luz que só existe nas quartas-feiras de outono. Tentei capturar isso. Não sei se consegui.</p>
+              <div class="card-tags">
+                <span class="tag">ensaio</span>
+                <span class="tag">luz</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 4 -->
+          <article class="article-card">
+            <div class="card-body" style="padding-top:1.8rem;">
+              <div class="card-meta">
+                <span class="card-category">Estudos</span>
+                <span class="card-dot" aria-hidden="true">·</span>
+                <time datetime="2026-03-30">30 mar 2026</time>
+                <span class="card-dot" aria-hidden="true">·</span>
+                <span>7 min</span>
+              </div>
+              <h2 class="card-title"><a href="#">Open RAN e o futuro das redes que não vemos</a></h2>
+              <p class="card-excerpt">Notas do programa do Instituto FOTON sobre Open RAN, network slicing e criptografia quântica. Por que isso importa além dos laboratórios?</p>
+              <div class="card-tags">
+                <span class="tag">redes</span>
+                <span class="tag">quantum</span>
+                <span class="tag">telecom</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 5 -->
+          <article class="article-card">
+            <div class="card-cover grad-games" style="height:160px;"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-category">Games</span>
+                <span class="card-dot" aria-hidden="true">·</span>
+                <time datetime="2026-02-18">18 fev 2026</time>
+                <span class="card-dot" aria-hidden="true">·</span>
+                <span>5 min</span>
+              </div>
+              <h2 class="card-title"><a href="#">Jogos como espelhos: o que Hades me ensinou sobre persistência</a></h2>
+              <p class="card-excerpt">Cada morte em Hades é um dado sobre o que ainda não aprendi. Existe algo profundamente honesto nisso.</p>
+              <div class="card-tags">
+                <span class="tag">roguelite</span>
+                <span class="tag">reflexão</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- Photos -->
+      <section class="photos-section" aria-label="Fotografia">
+        <p class="section-label">Fotografia</p>
+        <div class="photo-grid">
+          <div class="photo-item" onclick="openLightbox('Janela de novembro')" role="button" tabindex="0" aria-label="Ver foto: Janela de novembro" onkeydown="if(event.key==='Enter')openLightbox('Janela de novembro')">
+            <div class="photo-item-inner grad-warmth">
+              <div class="photo-placeholder">janela</div>
+            </div>
+          </div>
+          <div class="photo-item" onclick="openLightbox('Café frio')" role="button" tabindex="0" aria-label="Ver foto: Café frio" onkeydown="if(event.key==='Enter')openLightbox('Café frio')">
+            <div class="photo-item-inner grad-teal">
+              <div class="photo-placeholder">café</div>
+            </div>
+          </div>
+          <div class="photo-item" onclick="openLightbox('Rua vazia')" role="button" tabindex="0" aria-label="Ver foto: Rua vazia" onkeydown="if(event.key==='Enter')openLightbox('Rua vazia')">
+            <div class="photo-item-inner grad-study">
+              <div class="photo-placeholder">rua</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /home-view -->
+
+    <!-- ════ ARTICLE VIEW ════ -->
+    <div class="article-page" id="article-view" aria-label="Artigo">
+      <article>
+        <header class="article-header">
+          <div class="article-eyebrow">
+            <span class="card-category">Estudos</span>
+            <span>·</span>
+            <time datetime="2026-06-01">1 jun 2026</time>
+            <span>·</span>
+            <span>6 min de leitura</span>
+          </div>
+          <h1 class="article-title">A lógica por trás das máquinas de estado</h1>
+          <p class="article-subtitle">Uma reflexão sobre Programming I e o que permanece quando a aula acaba.</p>
+          <div class="article-divider" aria-hidden="true"></div>
+          <div class="card-tags">
+            <span class="tag">programação</span>
+            <span class="tag">lógica</span>
+            <span class="tag">SAP</span>
+          </div>
+        </header>
+
+        <div class="article-body">
+          <p>Aprendi sobre máquinas de estado numa tarde qualquer do programa de Digitalização da SAP. O professor estava explicando como um semáforo pode ser modelado formalmente: estados discretos, transições previsíveis, comportamento determinístico. Parecia abstrato. Mas então olhei pela janela para o semáforo da rua e algo mudou de lugar.</p>
+
+          <blockquote>
+            "Um sistema complexo que funciona invariavelmente evoluiu de um sistema simples que funcionava."
+            <cite>— John Gall</cite>
+          </blockquote>
+
+          <p>O que me fascinou não foi o semáforo em si, mas a ideia de que sistemas que parecem caóticos na superfície têm, por baixo, uma estrutura rígida e elegante. Um semáforo não pensa. Ele transita. E essa distinção — entre pensar e transitar — é onde começa a verdadeira engenharia de software.</p>
+
+          <figure class="article-image" onclick="openLightbox('Diagrama de estados — esboço em caderno')" role="button" tabindex="0" aria-label="Ver imagem maior: Diagrama de estados">
+            <div style="height:260px;border-radius:8px;" class="grad-study">
+              <div style="height:100%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;color:rgba(255,255,255,0.4);">diagrama de estados</div>
+            </div>
+            <figcaption>Esboço feito em caderno durante a aula — os erros também ficaram.</figcaption>
+          </figure>
+
+          <p>Na Programming I, erramos muito. Isso é parte do projeto. Mas aprendi que existe uma diferença entre o erro que te faz andar em círculos e o erro que te mostra onde o mapa estava errado. Máquinas de estado me ensinaram a identificar o segundo tipo: quando o sistema chega num estado impossível, não é um bug aleatório — é uma pista sobre qual transição foi mal especificada.</p>
+
+          <p>Levo isso comigo além do código. Quando fico travada num problema — de matemática, de relação, de decisão — agora pergunto: em que estado estou? Que evento me trouxe aqui? Quais são as transições possíveis daqui? É uma forma de pensar que me dá mais agência e menos ansiedade.</p>
+        </div>
+
+        <nav class="article-nav" aria-label="Navegação entre artigos">
+          <a href="#" class="article-nav-item" onclick="showHome(); return false;">
+            <span class="nav-direction">← Anterior</span>
+            <span class="nav-article-title">O que a neuroplasticidade me ensinou sobre falhar bem</span>
+          </a>
+          <a href="#" class="article-nav-item next">
+            <span class="nav-direction">Próximo →</span>
+            <span class="nav-article-title">Open RAN e o futuro das redes que não vemos</span>
+          </a>
+        </nav>
+      </article>
+    </div>
+
+  </main>
+
+  <footer>
+    <span class="footer-brand">Talita Rolin</span>
+    <ul class="footer-links">
+      <li><a href="#">RSS</a></li>
+      <li><a href="#">LinkedIn</a></li>
+      <li><a href="#">GitHub</a></li>
+    </ul>
+    <span class="footer-copy">© 2026</span>
+  </footer>
+
+  <script>
+    // ─── QUOTES ───────────────────────────────────────────────
+    const quotes = [
+      { text: "Só existe uma forma de aprender — é através da ação.", author: "Paulo Coelho" },
+      { text: "A imaginação é mais importante que o conhecimento.", author: "Albert Einstein" },
+      { text: "Contemplar é a forma mais elevada de atividade.", author: "Aristóteles" },
+      { text: "O que sabemos é uma gota; o que ignoramos é um oceano.", author: "Isaac Newton" },
+      { text: "Educar a mente sem educar o coração não é educação.", author: "Aristóteles" },
+      { text: "A arte de escrever é a arte de descobrir o que você acredita.", author: "Gustave Flaubert" },
+    ];
+    const q = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('daily-quote').textContent = q.text;
+    document.getElementById('daily-author').textContent = `— ${q.author}`;
+
+    // ─── THEME TOGGLE ─────────────────────────────────────────
+    function toggleTheme() {
+      const root = document.documentElement;
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('theme-icon').textContent = isDark ? '◑' : '◐';
+    }
+
+    // ─── NAVIGATION ───────────────────────────────────────────
+    function showHome() {
+      document.getElementById('home-view').classList.remove('hidden');
+      document.getElementById('article-view').classList.remove('active');
+      document.getElementById('progress').style.width = '0%';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showArticle() {
+      document.getElementById('home-view').classList.add('hidden');
+      document.getElementById('article-view').classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ─── PROGRESS BAR ─────────────────────────────────────────
+    window.addEventListener('scroll', () => {
+      const articleView = document.getElementById('article-view');
+      if (!articleView.classList.contains('active')) return;
+      const docH = document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = docH > 0 ? (window.scrollY / docH) * 100 : 0;
+      const bar = document.getElementById('progress');
+      bar.style.width = scrolled + '%';
+      bar.setAttribute('aria-valuenow', Math.round(scrolled));
+    });
+
+    // ─── LIGHTBOX ─────────────────────────────────────────────
+    function openLightbox(caption) {
+      const lb = document.getElementById('lightbox');
+      document.getElementById('lightbox-caption').textContent = caption || '';
+      lb.classList.add('open');
+      lb.focus();
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+    }
+    document.getElementById('lightbox').addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+    document.getElementById('lightbox').addEventListener('click', e => {
+      if (e.target === document.getElementById('lightbox')) closeLightbox();
+    });
+  </script>
+</body>
+</html>
