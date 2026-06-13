@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Redirecionando…</title>
+    <meta http-equiv="refresh" content="0;url=/?p=%2F" />
+    <script>
+        // Preserve the requested path and redirect to index with param `p`
+        (function () {
+            try {
+                var original = location.pathname + location.search + location.hash;
+                var target = '/' + '?p=' + encodeURIComponent(original);
+                location.replace(target);
+            } catch (e) {
+                location.replace('/');
+            }
+        })();
+    </script>
+</head>
+
+<body>
+    <p>Redirecionando para a página inicial…</p>
+    <p><a href="/">Ir para a página inicial</a></p>
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    color-scheme: light;
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #faf8f4;
+    color: #222222;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    background-color: #faf8f4;
+    color: #222222;
+    font-family: var(--font-body), system-ui, sans-serif;
+    line-height: 1.8;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23t)' opacity='0.03'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 400px 400px;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 30% 10%, rgba(255, 255, 255, 0.12), transparent 20%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.08), transparent 25%);
+}
+
+body.dark {
+    background-color: #1a1714;
+    color: #ede9e2;
+}
+
+body.dark::before {
+    background: radial-gradient(circle at 30% 10%, rgba(255, 255, 255, 0.08), transparent 18%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05), transparent 22%);
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+::selection {
+    background: #7a1f4d;
+    color: #fff;
+}
+
+a {
+    color: #7a1f4d;
+    text-decoration: none;
+}
+
+a:hover,
+a:focus-visible {
+    opacity: 0.8;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+.skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -3rem;
+    z-index: 50;
+    padding: 0.7rem 1rem;
+    border-radius: 999px;
+    background: #7a1f4d;
+    color: #fff;
+    font-size: 0.875rem;
+    transition: top 0.2s ease;
+}
+
+.skip-link:focus-visible {
+    top: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto;
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
