@@ -8,6 +8,14 @@ const featured = allPosts.find((post) => post.featured) ?? allPosts[0];
 const quote = quotes[Math.floor(Math.random() * quotes.length)];
 
 export default function HomePage() {
+    if (!featured) {
+        return (
+            <section className="mx-auto max-w-[1120px] px-6 py-16">
+                <h1>Nenhum post encontrado.</h1>
+            </section>
+        );
+    }
+
     return (
         <section className="mx-auto max-w-[1120px] px-6 pb-16 pt-8 lg:px-8">
             <a href="#main-content" className="skip-link">
@@ -51,16 +59,14 @@ export default function HomePage() {
                             <div className="featured-body p-10">
                                 <span className="featured-label uppercase tracking-[0.14em] text-[#B88917]">✦ Destaque</span>
                                 <h2 className="featured-title mt-4 text-4xl font-semibold leading-tight text-[#222222] dark:text-[#ede9e2]">
-                                    <Link href={`/categoria/${featured.categorySlug}/${featured.slug}`} className="hover:text-[#7a1f4d]">
-                                        {featured.title}
+                                    <Link href={`/${featured.categorySlug}/${featured.slug}`} className="hover:text-[#7a1f4d]">                                        {featured.title}
                                     </Link>
                                 </h2>
                                 <p className="featured-excerpt mt-6 max-w-[45ch] text-base leading-8 text-[#5e5a55] dark:text-[#dcd6cf]">
                                     {featured.description}
                                 </p>
                                 <Link
-                                    href={`/categoria/${featured.categorySlug}/${featured.slug}`}
-                                    className="read-link mt-8 inline-flex items-center gap-2 text-sm uppercase tracking-[0.14em] text-[#7a1f4d]"
+                                    href={`/${featured.categorySlug}/${featured.slug}`} className="read-link mt-8 inline-flex items-center gap-2 text-sm uppercase tracking-[0.14em] text-[#7a1f4d]"
                                     aria-label={`Ler: ${featured.title}`}
                                 >
                                     Ler artigo →
@@ -81,8 +87,7 @@ export default function HomePage() {
                                             <span>{post.readingTime} min</span>
                                         </div>
                                         <h3 className="card-title text-2xl font-semibold leading-tight text-[#222222] dark:text-[#ede9e2]">
-                                            <Link href={`/categoria/${post.categorySlug}/${post.slug}`} className="hover:text-[#7a1f4d]">
-                                                {post.title}
+                                            <Link href={`/${post.categorySlug}/${post.slug}`} className="hover:text-[#7a1f4d]">                                                {post.title}
                                             </Link>
                                         </h3>
                                         <p className="card-excerpt mt-4 text-sm leading-7 text-[#5e5a55] dark:text-[#dcd6cf]">{post.description}</p>
