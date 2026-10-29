@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#F4F0E8"/>
+  <circle cx="1020" cy="112" r="220" fill="#E8DFD2"/>
+  <path d="M0 520C183 470 365 558 570 508C772 459 982 432 1200 494V630H0V520Z" fill="#E8DFD2"/>
+  <path d="M96 473H1104" stroke="#7A1F4D" stroke-width="8" stroke-linecap="round"/>
+  <path d="M173 454V290M250 454V290M327 454V290M404 454V290M481 454V290" stroke="#7A1F4D" stroke-width="18" stroke-linecap="round"/>
+  <path d="M153 279L327 205L500 279H153Z" fill="#7A1F4D"/>
+  <path d="M680 454L694 294M764 454L739 295M848 454L873 295M932 454L946 295M1016 454L1006 295" stroke="#B88917" stroke-width="18" stroke-linecap="round"/>
+  <path d="M670 279L842 205L1015 279H670Z" fill="#B88917"/>
+  <path d="M734 204L737 176M780 184L799 163M826 166L839 141M875 171L891 147" stroke="#7A1F4D" stroke-width="8" stroke-linecap="round"/>
+  <text x="600" y="548" text-anchor="middle" fill="#222222" font-family="Georgia, serif" font-size="44" letter-spacing="8">DEMOCRACIA</text>
+</svg>
