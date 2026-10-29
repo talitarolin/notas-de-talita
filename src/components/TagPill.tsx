@@ -1,7 +1,8 @@
 import Link from 'next/link';
+import { normalizeTag } from '@/lib/content';
 
 export function TagPill({ tag }: { tag: string }) {
-    const tagSlug = tag.toLowerCase().replace(/[^a-z0-9]+/gi, '-');
+    const tagSlug = normalizeTag(tag);
     return (
         <Link
             href={`/tag/${encodeURIComponent(tagSlug)}`}

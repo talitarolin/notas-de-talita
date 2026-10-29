@@ -31,7 +31,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
             <div className="grid gap-8">
                 {posts.map((post) => (
                     <article key={post._id} className="rounded-[22px] border border-[rgba(34,34,34,0.1)] bg-surface-muted p-8 shadow-sm transition hover:-translate-y-1 dark:border-[rgba(237,233,226,0.09)] dark:bg-[#201d19]">
-                        <Link href={`/categoria/${post.categorySlug}/${post.slug}`} className="text-3xl font-semibold leading-tight text-[#222222] hover:text-[#7a1f4d] dark:text-[#ede9e2]">
+                        <Link href={`/${post.categorySlug}/${post.slug}`} className="text-3xl font-semibold leading-tight text-[#222222] hover:text-[#7a1f4d] dark:text-[#ede9e2]">
                             {post.title}
                         </Link>
                         <div className="mt-4 flex flex-wrap gap-3 text-[0.75rem] uppercase tracking-[0.12em] text-[#5e5a55] dark:text-[#dcd6cf]">

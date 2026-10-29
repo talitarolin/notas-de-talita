@@ -3,8 +3,7 @@
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { allPosts } from 'contentlayer/generated';
-
-const formatTagSlug = (tag: string) => tag.toLowerCase().replace(/[^a-z0-9]+/gi, '-');
+import { normalizeTag } from '@/lib/content';
 
 export function SearchPanel() {
     const [term, setTerm] = useState('');
@@ -51,14 +50,14 @@ export function SearchPanel() {
                     results.length > 0 ? (
                         results.map((post) => (
                             <article key={post._id} className="rounded-[22px] border border-[rgba(34,34,34,0.1)] bg-surface-muted p-6 shadow-sm transition hover:-translate-y-1 dark:border-[rgba(237,233,226,0.09)] dark:bg-[#201d19]">
-                                <Link href={`/categoria/${post.categorySlug}/${post.slug}`} className="text-2xl font-semibold leading-tight text-[#222222] hover:text-[#7a1f4d] dark:text-[#ede9e2]">
+                                <Link href={`/${post.categorySlug}/${post.slug}`} className="text-2xl font-semibold leading-tight text-[#222222] hover:text-[#7a1f4d] dark:text-[#ede9e2]">
                                     {post.title}
                                 </Link>
                                 <p className="mt-3 text-sm leading-7 text-[#5e5a55] dark:text-[#dcd6cf]">{post.description}</p>
                                 <div className="mt-5 flex flex-wrap gap-3 text-[0.72rem] uppercase tracking-[0.12em] text-[#7a1f4d]">
                                     <span>{post.category}</span>
                                     {post.tags.map((tag) => (
-                                        <Link key={tag} href={`/tag/${formatTagSlug(tag)}`} className="hover:underline">
+                                        <Link key={tag} href={`/tag/${normalizeTag(tag)}`} className="hover:underline">
                                             {tag}
                                         </Link>
                                     ))}

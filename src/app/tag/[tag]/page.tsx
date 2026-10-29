@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getAllPosts, getPostsByTag, normalizeTag } from '@/lib/content';
+import { getAllPosts, getPostsByTag, normalizeTag, getTagLabelFromSlug } from '@/lib/content';
 import { format } from 'date-fns';
 
 interface TagPageProps {
@@ -18,6 +18,8 @@ export default function TagPage({ params }: TagPageProps) {
         notFound();
     }
 
+    const tagLabel = getTagLabelFromSlug(params.tag);
+
     return (
         <section className="mx-auto max-w-[1120px] px-6 pb-16 pt-8 lg:px-8">
             <div className="mb-12 space-y-4">
@@ -26,9 +28,10 @@ export default function TagPage({ params }: TagPageProps) {
                     Tag
                     <span className="h-px flex-1 bg-[rgba(34,34,34,0.1)]"></span>
                 </p>
-                <h1 className="text-5xl font-semibold leading-tight text-[#222222] dark:text-[#ede9e2]">#{params.tag}</h1>
+                {/* Exiba o label bonito com a primeira letra maiúscula se aplicável */}
+                <h1 className="text-5xl font-semibold leading-tight text-[#222222] dark:text-[#ede9e2]">#{tagLabel}</h1>
                 <p className="max-w-[60ch] text-lg leading-8 text-[#5e5a55] dark:text-[#dcd6cf]">
-                    Artigos filtrados pela tag #{params.tag}. Navegue pelos textos que compartilham este tema.
+                    Artigos filtrados pela tag #{tagLabel}. Navegue pelos textos que compartilham este tema.
                 </p>
             </div>
             <div className="grid gap-8">

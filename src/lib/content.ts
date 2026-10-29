@@ -32,8 +32,10 @@ export const getPostsByCategory = (category: string) => {
 };
 
 export const getPostsByTag = (tag: string) => {
-    const normalized = tag.toLowerCase();
-    return getAllPosts().filter((post) => post.tags.some((item) => item.toLowerCase() === normalized));
+    const searchSlug = normalizeTag(tag);
+    return getAllPosts().filter((post) =>
+        post.tags.some((postTag) => normalizeTag(postTag) === searchSlug)
+    );
 };
 
 export const getTagLabelFromSlug = (slug: string) => {
@@ -53,8 +55,18 @@ export const getRelatedPosts = (currentSlug: string, tag: string) => {
         .slice(0, 3);
 };
 
-export const normalizeTag = (tag: string) => tag.toLowerCase().replace(/[^a-z0-9]+/gi, '-').replace(/^-+|-+$/g, '');
+export const normalizeTag = (tag: string) => tag
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/gi, '-')
+    .replace(/^-+|-+$/g, '');
 
-export const normalizeSlug = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/gi, '-').replace(/^-+|-+$/g, '');
+export const normalizeSlug = (value: string) => value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/gi, '-')
+    .replace(/^-+|-+$/g, '');
 
 export const getAllTagSlugs = () => getAllTags().map(normalizeTag);
