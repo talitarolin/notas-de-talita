@@ -73,7 +73,7 @@ export default function ArticlePage({ params }: ArticlePageProps) {
     return (
         <article className="relative mx-auto max-w-[920px] px-6 pb-24 pt-8 lg:px-8">
             <ReadingProgress />
-            <div className={`mb-10 rounded-[28px] border border-[rgba(34,34,34,0.1)] bg-surface-muted p-10 shadow-sm dark:border-[rgba(237,233,226,0.09)] ${highlightKeyPhrases ? 'dark:bg-[#faf8f4]' : 'dark:bg-[#201d19]'}`}>
+            <div className="mb-10 rounded-[28px] border border-[rgba(34,34,34,0.1)] bg-surface-muted p-10 shadow-sm dark:border-[rgba(237,233,226,0.09)] dark:bg-[#201d19]">
                 <div className="flex flex-wrap items-center gap-3 text-[0.75rem] uppercase tracking-[0.14em] text-[#7a1f4d]">
                     <span>{post.category}</span>
                     <span aria-hidden="true">·</span>
@@ -81,10 +81,10 @@ export default function ArticlePage({ params }: ArticlePageProps) {
                     <span aria-hidden="true">·</span>
                     <span>{post.readingTime} min de leitura</span>
                 </div>
-                <h1 className={`article-title mt-6 text-5xl font-semibold leading-tight text-[#222222] ${highlightKeyPhrases ? 'dark:text-[#222222]' : 'dark:text-[#ede9e2]'}`}>
+                <h1 className="article-title mt-6 text-5xl font-semibold leading-tight text-[#222222] dark:text-[#ede9e2]">
                     {post.title}
                 </h1>
-                <p className={`article-subtitle mt-6 text-xl font-light italic leading-9 text-[#5e5a55] ${highlightKeyPhrases ? 'dark:text-[#5e5a55]' : 'dark:text-[#dcd6cf]'}`}>
+                <p className="article-subtitle mt-6 text-xl font-light italic leading-9 text-[#5e5a55] dark:text-[#dcd6cf]">
                     {post.description}
                 </p>
                 <div className="mt-8 flex flex-wrap gap-2">
