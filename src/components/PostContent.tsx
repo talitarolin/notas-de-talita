@@ -48,11 +48,19 @@ const components = {
     ),
 } satisfies MDXComponents;
 
-export function PostContent({ code }: { code: string }) {
+export function PostContent({ code, highlightKeyPhrases = false }: { code: string; highlightKeyPhrases?: boolean }) {
     const Component = useMDXComponent(code);
+    const postComponents = highlightKeyPhrases
+        ? {
+            ...components,
+            p: ({ children }: ComponentPropsWithoutRef<'p'>) => <p className="mb-6 text-lg leading-8 text-black">{children}</p>,
+            strong: ({ children }: ComponentPropsWithoutRef<'strong'>) => <strong className="font-bold text-[#7a1f4d] dark:text-[#D4A832]">{children}</strong>,
+        } satisfies MDXComponents
+        : components;
+
     return (
-        <section className="article-body prose prose-xl prose-slate dark:prose-invert prose-headings:text-[#222222] prose-a:text-[#7a1f4d] prose-blockquote:border-[#B88917] prose-blockquote:bg-surface-muted prose-code:bg-[#F5F2EC] prose-pre:bg-[#f8f4ee] dark:prose-headings:text-[#ede9e2] dark:prose-blockquote:bg-[#201d19] dark:prose-code:bg-[#2a1f16]">
-            <Component components={components} />
+        <section className={`article-body prose prose-xl prose-slate dark:prose-invert prose-headings:text-[#222222] prose-a:text-[#7a1f4d] prose-blockquote:border-[#B88917] prose-blockquote:bg-surface-muted prose-code:bg-[#F5F2EC] prose-pre:bg-[#f8f4ee] dark:prose-headings:text-[#ede9e2] dark:prose-blockquote:bg-[#201d19] dark:prose-code:bg-[#2a1f16]${highlightKeyPhrases ? ' dark:rounded-[22px] dark:bg-[#faf8f4] dark:p-8' : ''}`}>
+            <Component components={postComponents} />
         </section>
     );
 }
